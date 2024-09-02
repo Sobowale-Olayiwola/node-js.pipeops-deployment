@@ -36,5 +36,8 @@ app.get("/posts", async (req, res) => {
 });
 
 app.listen(port, () => {
+  setTimeout(() => {
+    console.log(JSON.stringify({currentServerTime: new Date()}))
+  }, 1000)
     console.log(`Server running successfully on PORT ${port}`)
 });
