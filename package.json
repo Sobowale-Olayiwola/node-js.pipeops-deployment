@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "worker:start": "node worker.js",
+    "job:start": "node job.js",
     "start": "node server.js"
   },
   "keywords": [],

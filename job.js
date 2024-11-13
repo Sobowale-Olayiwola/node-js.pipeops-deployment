@@ -1,0 +1,1 @@
+console.log("Work Hard and Smart ", new Date())
