@@ -1,10 +1,20 @@
 const express = require("express");
 const axios = require("axios");
 const process = require("process");
+const Redis = require('ioredis');
 require("dotenv").config();
 const port = process.env.PORT || 8085;
 
 const app = express();
+
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT
+});
+
+// Check Redis connection on startup
+redis.on('connect', () => console.log('Connected to Redis ✅'));
+redis.on('error', (err) => console.error('Redis Error ❌', err));
 
 app.get("/", (req, res) => {
   res.json({ data: "Node js server deployed " });
@@ -12,6 +22,15 @@ app.get("/", (req, res) => {
 
 app.get("/port", (req, res) => {
   res.json({ port });
+});
+
+app.get('/redis', async (req, res) => {
+  try {
+      await redis.ping(); // Send a PING command to Redis
+      res.status(200).json({ message: 'pong' });
+  } catch (error) {
+      res.status(500).json({ error: 'Redis is down' });
+  }
 });
 
 app.get("/posts", async (req, res) => {
